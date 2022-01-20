@@ -5,6 +5,7 @@ import { action } from "@storybook/addon-actions";
 import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList";
+import Appointment from "components/Appointment/index.js";
 
 import "index.scss";
 
@@ -58,13 +59,13 @@ storiesOf("Button", module)
       backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
     })
     .add("Monday", () => (
-      <DayList days={days} day={"Monday"} setDay={action("setDay")} />
+      <DayList days={days} value={"Monday"} onChange={action("setDay")} />
     ))
     .add("Tuesday", () => (
-      <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
+      <DayList days={days} value={"Tuesday"} onChange={action("setDay")} />
     ))
     .add("Wednesday", () => (
-        <DayList days={days} day={"Wednesday"} setDay={action("setDay")} />
+        <DayList days={days} value={"Wednesday"} onChange={action("setDay")} />
     ));
     const interviewer = {
       id: 1,
@@ -114,14 +115,14 @@ storiesOf("Button", module)
         .add("Initial", () => (
           <InterviewerList
             interviewers={interviewers}
-            onChange={action("onChange")}
+            
           />
         ))
         .add("Selected", () => (
           <InterviewerList
             interviewers={interviewers}
             value={3}
-            onChange={action("onChange")}
+            
           />
         ))
         .add("Clickable", () => (
@@ -130,3 +131,9 @@ storiesOf("Button", module)
             onChange={action("onChange")}
           />
         ));
+        storiesOf("Appointment", module)
+  .addParameters({
+    backgrounds: [{ name: "white", value: "#fff", default: true }]
+  })
+  .add("Appointment", () => <Appointment />)
+  .add("Appointment with Time", () => <Appointment time="12pm" />);
