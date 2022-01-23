@@ -93,17 +93,16 @@ import "components/Application.scss";
       const [days, appointments, interviewers] = all;
       setState(prev => ({
         ...prev,
-        days: all[0].data,
-        appointments: all[1].data,
-        interviewers: all[2].data
+        days: days.data,
+        appointments: appointments.data,
+        interviewers: interviewers.data
       }));
-      setTest(all[0].data);
+      //setTest(all[0].data);
       //console.log("Test:", test);
-      console.log("State:", state)
+      //console.log("State:", state)
     });
   }, []);
-  console.log("Test:", test);
-  console.log("State:", state);
+
     return (
       <main className="layout">
         <section className="sidebar">
