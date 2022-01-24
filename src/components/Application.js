@@ -1,9 +1,8 @@
 /* eslint-disable react/jsx-no-undef */
 import React, { useState, useEffect } from "react";
 import DayList from "components/DayList";
-import InterviewerList from "./InterviewerList";
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 import axios from "axios";
 
 import "components/Application.scss";
@@ -47,35 +46,35 @@ import "components/Application.scss";
   //   }
   // ];
   
-  const interviewers = [
-    { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
-    { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
-    { id: 3, name: "Mildred Nazir", avatar: "https://i.imgur.com/T2WwVfS.png" },
-    { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
-    { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
-  ];
+  // const interviewers = [
+  //   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
+  //   { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
+  //   { id: 3, name: "Mildred Nazir", avatar: "https://i.imgur.com/T2WwVfS.png" },
+  //   { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
+  //   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
+  // ];
  
   export default function Application(props) {
     const [state, setState] = useState({
       day: "Monday",
       days: [],
-      appointments: {}
+      appointments: {},
+      interviewers:{}
     });
-    const [test, setTest] =useState({});
-  
   
     const appointments = getAppointmentsForDay(state, state.day);
-    console.log("Appointments",appointments);
+    const interviewers= getInterviewersForDay(state, state.day);
     const schedule = appointments.map((appointment) => {
-      console.log("Appointments",appointments);
       const interview = getInterview(state, appointment.interview);
-    
+     
+    console.log("inter:",interviewers);
       return (
         <Appointment
           key={appointment.id}
           id={appointment.id}
           time={appointment.time}
           interview={interview}
+          interviewers={interviewers}
         />
       );
     });
@@ -123,7 +122,7 @@ import "components/Application.scss";
         </section>
         <section className="schedule">
           {schedule}
-          <Appointment key="last" time="5pm"/>
+          <Appointment key="last" time="5pm" interviewers={ state.interviewers }/>
         </section>
       </main>
     );
