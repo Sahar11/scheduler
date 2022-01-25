@@ -34,16 +34,15 @@ export default function Appointment(props) {
     };
    transition(SAVING);
     props.bookInterview(props.id, interview)
-    .then(() => transition(SHOW));
-     
+    .then(() => transition(SHOW))
+    .catch(err => transition(ERROR_SAVE, true));
     }
     function deleteAppointment() {
-      transition(DELETE);
-      props.deleteInterview(props.id)
-      .then(() => transition(EMPTY))
-      .catch(err =>{
-        transition(ERROR_DELETE);
-      });
+      transition(DELETE, true);
+      props
+       .deleteInterview(props.id)
+       .then(() => transition(EMPTY))
+       .catch(error => transition(ERROR_DELETE, true));
 
     }
      // delete confirmation function
