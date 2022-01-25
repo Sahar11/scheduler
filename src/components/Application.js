@@ -15,7 +15,7 @@ import "components/Application.scss";
       interviewers:{}
     });
     function bookInterview(id, interview) {
-      console.log(id, interview);
+      //console.log(id, interview);
 
       const appointment = {
         ...state.appointments[id],
@@ -28,17 +28,23 @@ import "components/Application.scss";
       
     return  axios.put(`/api/appointments/${id}`,appointment)
       .then(response => setState((prev) => ({...prev, appointments })))
-      .catch((err) => console.log(err.message))
-  
-    //  setState({
-    //     ...state,
-    //     appointments
-    //   });
-    // return (
-    //     // PUT request using axios inside useEffect React hook
-    //     axios.put('/api/appointments/:id',appointment)
-    // );
+      .catch((err) => console.log(err.message));
       
+    }
+
+    const cancelInterview = function (id) {
+ //set appointment interview to null
+ const appointment = {
+   ...state.appointments[id],
+   interview: null
+ }
+ const appointments = {
+  ...state.appointments,
+  [id]: appointment
+};
+return axios.delete(`/api/appointments/${id}`)
+      .then(response => setState((prev) => ({...prev, appointments })));
+
     }
     
   
@@ -56,6 +62,7 @@ import "components/Application.scss";
           interview={interview}
           interviewers={interviewers}
           bookInterview={bookInterview}
+          deleteInterview={cancelInterview}
         />
       );
     });
