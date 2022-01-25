@@ -26,10 +26,14 @@ import "components/Application.scss";
         [id]: appointment
       };
       
-     return setState({
-        ...state,
-        appointments
-      });
+    return  axios.put(`/api/appointments/${id}`,appointment)
+      .then(response => setState((prev) => ({...prev, appointments })))
+      .catch((err) => console.log(err.message))
+  
+    //  setState({
+    //     ...state,
+    //     appointments
+    //   });
     // return (
     //     // PUT request using axios inside useEffect React hook
     //     axios.put('/api/appointments/:id',appointment)
