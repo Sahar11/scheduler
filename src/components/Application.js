@@ -6,53 +6,6 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "help
 import axios from "axios";
 
 import "components/Application.scss";
-
-  // const appointments = [
-  //   {
-  //     id: 1,
-  //     time: "12pm",
-  //   },
-  //   {
-  //     id: 2,
-  //     time: "1pm",
-  //     interview: {
-  //       student: "Lydia Miller-Jones",
-  //       interviewer:{
-  //         id: 3,
-  //         name: "Sylvia Palmer",
-  //         avatar: "https://i.imgur.com/LpaY82x.png",
-  //       }
-  //     }
-  //   },
-  //   {
-  //     id: 3,
-  //     time: "2pm",
-  //   },
-  //   {
-  //     id: 4,
-  //     time: "3pm",
-  //     interview: {
-  //       student: "Archie Andrews",
-  //       interviewer:{
-  //         id: 4,
-  //         name: "Cohana Roy",
-  //         avatar: "https://i.imgur.com/FK8V841.jpg",
-  //       }
-  //     }
-  //   },
-  //   {
-  //     id: 5,
-  //     time: "4pm",
-  //   }
-  // ];
-  
-  // const interviewers = [
-  //   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
-  //   { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
-  //   { id: 3, name: "Mildred Nazir", avatar: "https://i.imgur.com/T2WwVfS.png" },
-  //   { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
-  //   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
-  // ];
  
   export default function Application(props) {
     const [state, setState] = useState({
@@ -61,13 +14,36 @@ import "components/Application.scss";
       appointments: {},
       interviewers:{}
     });
+    function bookInterview(id, interview) {
+      console.log(id, interview);
+
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      
+     return setState({
+        ...state,
+        appointments
+      });
+    // return (
+    //     // PUT request using axios inside useEffect React hook
+    //     axios.put('/api/appointments/:id',appointment)
+    // );
+      
+    }
+    
   
     const appointments = getAppointmentsForDay(state, state.day);
     const interviewers= getInterviewersForDay(state, state.day);
     const schedule = appointments.map((appointment) => {
       const interview = getInterview(state, appointment.interview);
      
-    console.log("inter:",interviewers);
+    console.log("interview:",interview);
       return (
         <Appointment
           key={appointment.id}
@@ -75,6 +51,7 @@ import "components/Application.scss";
           time={appointment.time}
           interview={interview}
           interviewers={interviewers}
+          bookInterview={bookInterview}
         />
       );
     });
