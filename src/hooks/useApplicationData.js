@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import searchDayByAppointment from "helpers/selectors"
 
 export default function useApplicationData() {
   const [state, setState] = useState({
@@ -27,6 +28,14 @@ export default function useApplicationData() {
     });
   }, []);
 
+  const updateSpots = function (id) {
+    axios.get('api/days')
+      .then((response) => {
+        setState((prev) => ({ ...prev, days: response.data }))
+      })
+  }
+
+
   function bookInterview(id, interview) {
     //console.log(id, interview);
 
@@ -40,7 +49,8 @@ export default function useApplicationData() {
     };
     //console.log(":OLAAAA", id);
     return axios.put(`/api/appointments/${id}`, appointment)
-      .then(response => setState((prev) => ({ ...prev, appointments })))
+      .then(response => setState((prev) => ({ ...prev, appointments })),
+        updateSpots(id))
     //.catch((err) => console.log(err.message));
 
   }
@@ -56,12 +66,13 @@ export default function useApplicationData() {
       [id]: appointment
     };
     return axios.delete(`/api/appointments/${id}`)
-      .then(response => setState((prev) => ({ ...prev, appointments }))
+      .then(response => setState((prev) => ({ ...prev, appointments, updateSpots })),
+        updateSpots(id)
       );
 
   }
 
-   return {
+  return {
     state,
     setDay,
     bookInterview,
