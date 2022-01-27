@@ -51,7 +51,7 @@ export default function useApplicationData() {
     return axios.put(`/api/appointments/${id}`, appointment)
       .then(response => setState((prev) => ({ ...prev, appointments })),
         updateSpots(id))
-    //.catch((err) => console.log(err.message));
+    .catch((err) => console.log(err.message));
 
   }
 
