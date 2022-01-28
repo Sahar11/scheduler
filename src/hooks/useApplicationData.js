@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import searchDayByAppointment from "helpers/selectors"
+import { updateSpots } from "helpers/updateSpots";
+
 
 export default function useApplicationData() {
+
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -27,14 +29,7 @@ export default function useApplicationData() {
       }));
     });
   }, []);
-
-  const updateSpots = function (id) {
-    axios.get('api/days')
-      .then((response) => {
-        setState((prev) => ({ ...prev, days: response.data }))
-      })
-  }
-
+  
 
   function bookInterview(id, interview) {
     //console.log(id, interview);
@@ -47,11 +42,10 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    //console.log(":OLAAAA", id);
+    const days = updateSpots({ days:state.days, appointments }, id);
     return axios.put(`/api/appointments/${id}`, appointment)
-      .then(response => setState((prev) => ({ ...prev, appointments })),
-        updateSpots(id))
-    .catch((err) => console.log(err.message));
+      .then(response => setState((prev) => ({ ...prev, appointments, days })))
+      .catch((err) => console.log(err.message));
 
   }
 
@@ -65,9 +59,9 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
+    const days = updateSpots({ days:state.days, appointments }, id);
     return axios.delete(`/api/appointments/${id}`)
-      .then(response => setState((prev) => ({ ...prev, appointments, updateSpots })),
-        updateSpots(id)
+      .then(response => setState((prev) => ({ ...prev, appointments, days })),
       );
 
   }
