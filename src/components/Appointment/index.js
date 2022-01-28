@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import "components/Appointment/styles.scss";
 import Header from './Header';
 import Show from './Show';
@@ -50,17 +50,7 @@ export default function Appointment(props) {
   function confirmDelete() {
     transition(CONFIRM);
   };
-    //Side effect that listens for changes in state
-  //   useEffect(() => {
-  // debugger
-  // if (interview && mode === EMPTY) {
-  //   transition(SHOW);
-  //  }
-  //  if (interview === null && mode === SHOW) {
-  //   transition(EMPTY);
-  //  }
-  // }, [interview, transition, mode]);
-
+  
   return (
     <article className="appointment">
       <Header time={props.time} />
@@ -120,8 +110,7 @@ export default function Appointment(props) {
           onClose={() => back()}
         />
       )}
-      {/* <Header time={props.time} />
-      {props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer} /> : <Empty />} */}
+  
     </article>
   )
 }
