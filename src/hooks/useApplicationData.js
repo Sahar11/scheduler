@@ -44,7 +44,6 @@ export default function useApplicationData() {
     const days = updateSpots({ days:state.days, appointments }, id);
     return axios.put(`/api/appointments/${id}`, appointment)
       .then(response => setState((prev) => ({ ...prev, appointments, days })))
-      .catch((err) => console.log(err.message));
 
   }
 
