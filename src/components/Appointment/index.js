@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "components/Appointment/styles.scss";
 import Header from './Header';
 import Show from './Show';
@@ -25,9 +25,9 @@ export default function Appointment(props) {
 
   );
   //console.log("Props",props);
-
+// save appointment
   function save(name, interviewer) {
-    //console.log(interviewer);
+    console.log("SAVEFUNCTION",interviewer);
     const interview = {
       student: name,
       interviewer
@@ -37,6 +37,7 @@ export default function Appointment(props) {
       .then(() => transition(SHOW))
       .catch(err => transition(ERROR_SAVE, true));
   }
+  // delete appointment
   function destroy() {
     transition(DELETE, true);
     props
@@ -49,6 +50,16 @@ export default function Appointment(props) {
   function confirmDelete() {
     transition(CONFIRM);
   };
+    //Side effect that listens for changes in state
+  //   useEffect(() => {
+  // debugger
+  // if (interview && mode === EMPTY) {
+  //   transition(SHOW);
+  //  }
+  //  if (interview === null && mode === SHOW) {
+  //   transition(EMPTY);
+  //  }
+  // }, [interview, transition, mode]);
 
   return (
     <article className="appointment">
@@ -83,6 +94,7 @@ export default function Appointment(props) {
       )}
       {mode === CONFIRM && (
         <Confirm
+        message="Are you sure you want to cancel this appointment?"
           onCancel={() => back()}
           onConfirm={destroy}
         />

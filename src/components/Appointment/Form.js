@@ -23,6 +23,10 @@ const cancel = () => {
     setError("Student name cannot be blank");
     return;
   }
+  if (interviewer === null) {
+    setError("Please Select the interviewer");
+    return;
+  }
   
   setError("");
   props.onSave(student, interviewer)
