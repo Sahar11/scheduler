@@ -22,8 +22,14 @@ npm test
 npm run storybook
 ```
 ## Final Product
+
+### Full View
 !["Full View"](docs/Full-View.png)
+### Create and Edit block
 !["Create and Edit block"](docs/Create:Edit.png)
+### Edit and Delete options
 !["Edit and Delete options"](docs/Edit:Delete.png)
+### Delete Confirmation
 !["Delete Confirmation"](docs/deleteConfirmation.png)
+### Delete Error
 !["Delete Error"](docs/deleteError.png)
